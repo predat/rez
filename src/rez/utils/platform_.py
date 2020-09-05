@@ -9,6 +9,7 @@ from rez.utils.execution import Popen
 from rez.utils.data_utils import cached_property
 from rez.utils.platform_mapped import platform_mapped
 from rez.exceptions import RezSystemError
+from rez.vendor import distro
 from tempfile import gettempdir
 
 
@@ -270,7 +271,7 @@ class LinuxPlatform(_UnixPlatform):
         try:
             distributor_, release_, _ = platform.linux_distribution()
         except:
-            distributor_, release_, _ = platform.dist()
+            distributor_, release_, _ = distro.dist()
 
         if distributor_ and not distributor:
             distributor = distributor_
