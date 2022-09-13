@@ -1444,8 +1444,7 @@ class ResolvedContext(object):
         with open(context_file, 'w') as f:
             f.write(context_code)
 
-        quiet = quiet or \
-            (RezToolsVisibility[config.rez_tools_visibility] == RezToolsVisibility.never)
+        quiet = quiet or config.quiet
 
         # spawn the shell subprocess
         p = sh.spawn_shell(context_file,
