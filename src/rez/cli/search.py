@@ -60,6 +60,9 @@ def setup_parser(parser, completions=False):
     parser.add_argument(
         "-s", "--sort", action="store_true",
         help="print results in sorted order (deprecated)")
+    parser.add_argument(
+        "-i", "--case-insensitive", action="store_true",
+        help="match is case insensitive",)
     PKG_action = parser.add_argument(
         "PKG", type=str, nargs='?',
         help="packages to search, glob-style patterns are supported")
@@ -104,7 +107,7 @@ def command(opts, parser, extra_arg_groups=None):
         validate=(opts.validate or opts.errors)
     )
 
-    resource_type, search_results = searcher.search(opts.PKG)
+    resource_type, search_results = searcher.search(opts.PKG, opts.case_insensitive)
 
     if opts.errors:
         search_results = [x for x in search_results if x.validation_error]

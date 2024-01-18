@@ -12,6 +12,7 @@ that do not provide an implementation.
 
 import fnmatch
 from collections import defaultdict
+import re
 import sys
 
 from rez.packages import iter_package_families, iter_packages, get_latest_package
@@ -226,7 +227,7 @@ class ResourceSearcher(object):
               packages or variants.
         """
 
-    def search(self, resources_request=None):
+    def search(self, resources_request=None, case_insensitive=False):
         """Search for resources.
 
         Args:
@@ -246,7 +247,11 @@ class ResourceSearcher(object):
 
         family_names = set(
             x.name for x in iter_package_families(paths=self.package_paths)
-            if fnmatch.fnmatch(x.name, name_pattern)
+            if re.search(
+                fnmatch.translate(name_pattern),
+                x.name,
+                re.IGNORECASE if case_insensitive else re.UNICODE
+            )
         )
 
         family_names = sorted(family_names)
