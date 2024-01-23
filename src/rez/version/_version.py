@@ -127,7 +127,7 @@ class NumericToken(VersionToken):
 
     def __next__(self):
         other = copy.copy(self)
-        other.n = self.n = 1
+        other.n = self.n + 1
         return other
 
     def next(self):
